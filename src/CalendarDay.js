@@ -21,8 +21,10 @@ class CalendarDay extends Component {
 
     calendarColor: PropTypes.string,
 
+    dateContainerStyle: PropTypes.any,
     dateNameStyle: PropTypes.any,
     dateNumberStyle: PropTypes.any,
+
     weekendDateNameStyle: PropTypes.any,
     weekendDateNumberStyle: PropTypes.any,
     highlightDateNameStyle: PropTypes.any,
@@ -128,7 +130,9 @@ class CalendarDay extends Component {
     let dateViewStyle = this.props.enabled
       ? [{ backgroundColor: "transparent" }]
       : [{ opacity: this.props.disabledDateOpacity }];
-
+    if (this.props.dateContainerStyle) {
+      dateViewStyle.push(this.props.dateContainerStyle)
+    }
     let customStyle = this.props.customStyle;
     if (customStyle) {
       dateNameStyle.push(customStyle.dateNameStyle);
@@ -179,12 +183,12 @@ class CalendarDay extends Component {
         ];
       }
     }
-
+    const compiledDayViewStyle = dateViewStyle.reduce((result, item) => ({...result, ...item}), {} )
     let responsiveDateContainerStyle = {
-      width: this.state.containerSize,
-      height: this.state.containerSize,
-      borderRadius: this.state.containerBorderRadius,
-      padding: this.state.containerPadding
+      width: compiledDayViewStyle.width ? compiledDayViewStyle.width : this.state.containerSize,
+      height: compiledDayViewStyle.height ? compiledDayViewStyle.height : this.state.containerSize,
+      borderRadius: compiledDayViewStyle.borderRadius ? compiledDayViewStyle.borderRadius : this.state.containerBorderRadius,
+      padding: compiledDayViewStyle.padding? compiledDayViewStyle.padding : this.state.containerPadding
     };
 
     return (
