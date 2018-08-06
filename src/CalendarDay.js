@@ -139,24 +139,26 @@ class CalendarDay extends Component {
       dateNumberStyle.push(customStyle.dateNumberStyle);
       dateViewStyle.push(customStyle.dateContainerStyle);
     }
-    if (this.props.enabled && this.state.selected) {
+    if (this.props.enabled) {
       // Enabled state
       //The user can disable animation, so that is why I use selection type
       //If it is background, the user have to input colors for animation
       //If it is border, the user has to input color for border animation
-      switch (this.props.daySelectionAnimation.type) {
-        case "background":
-          dateViewStyle.push({ backgroundColor: this.props.daySelectionAnimation.highlightColor });
-          break;
-        case "border":
-          dateViewStyle.push({
-            borderColor: this.props.daySelectionAnimation.borderHighlightColor,
-            borderWidth: this.props.daySelectionAnimation.borderWidth
-          });
-          break;
-        default:
-          // No animation styling by default
-          break;
+      if (this.state.selected) {
+        switch (this.props.daySelectionAnimation.type) {
+          case "background":
+            dateViewStyle.push({ backgroundColor: this.props.daySelectionAnimation.highlightColor });
+            break;
+          case "border":
+            dateViewStyle.push({
+              borderColor: this.props.daySelectionAnimation.borderHighlightColor,
+              borderWidth: this.props.daySelectionAnimation.borderWidth
+            });
+            break;
+          default:
+            // No animation styling by default
+            break;
+        }
       }
 
       dateNameStyle = [styles.dateName, this.props.dateNameStyle];
